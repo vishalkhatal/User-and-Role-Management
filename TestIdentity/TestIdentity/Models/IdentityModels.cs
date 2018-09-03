@@ -12,7 +12,7 @@ namespace TestIdentity.Models
 
         public string PhoneNumber { get; set; }
 
-        public virtual ICollection<Organization> Organizations { get; set; }
+        public virtual Organization Organizations { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
