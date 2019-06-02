@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Data.Entity;
+using TestIdentity.Migrations;
 
 namespace TestIdentity.Models
 {
@@ -12,14 +14,20 @@ namespace TestIdentity.Models
 
         public string PhoneNumber { get; set; }
 
-        public virtual Organization Organizations { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+        }
+        public System.Data.Entity.DbSet<TestIdentity.Models.Organization> Organizations { get; set; }
     }
 }
